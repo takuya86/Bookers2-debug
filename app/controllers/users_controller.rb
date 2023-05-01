@@ -6,6 +6,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @books = @user.books
     @book = Book.new
+    @today_book = @books.where(created_at: Time.current.beginning_of_day..Time.current.end_of_day)
+    @yesterday_book = @books.created_yesterday
+    @this_week_book = @books.created_this_week
+    @last_week_book = @books.created_last_week
   end
 
   def index
@@ -20,6 +24,12 @@ class UsersController < ApplicationController
     else
       redirect_to user_path(current_user)
     end
+  end
+  
+  def daily_posts
+    user = User.find(params[:user_id])
+    @books = user.books.where(created_at: params[:created_at].to_date.all_day)
+    render :daily_post_count
   end
 
   def update
