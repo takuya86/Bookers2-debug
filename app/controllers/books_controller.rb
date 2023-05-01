@@ -2,13 +2,18 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
+    unless ViewCount.find_by(user_id: current_user.id, book_id: @book.id)
+      current_user.view_counts.create(book_id: @book.id)
+    end
     @user = current_user
     @newbook = Book.new
     @book_comment = BookComment.new
   end
 
   def index
-    @books = Book.all
+    @books = Book.left_joins(:favorites)
+               .group(:id)
+               .order('COUNT(favorites.id) DESC')
     @newbook = Book.new
   end
 
