@@ -14,7 +14,7 @@
       <% @groups.each do |group| %>
         <tr>
           <td>
-            <%= image_tag group.image, size:'50x50' %>
+            <%= image_tag group.get_image, size:'50x50' %>
           </td>
           <td>
             <%= link_to group.name, group_path(group) %>
