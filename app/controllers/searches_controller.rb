@@ -11,4 +11,9 @@ class SearchesController < ApplicationController
 			@records = Book.search_for(@content, @method)
 		end
   end
+  
+  def search_book
+    @books = Book.search(params[:keyword])
+    @content = params[:keyword]
+  end
 end

@@ -23,6 +23,10 @@ class Book < ApplicationRecord
     end
   end
   
+  def self.search(search_word)
+    Book.where(['tag LIKE?', "#{search_word}"])
+  end
+  
   # 今日
   scope :created_today, -> { where(created_at: Time.zone.now.all_day) }
   # 昨日

@@ -26,4 +26,5 @@ Rails.application.routes.draw do
   end
   
   get '/search', to: 'searches#search'
+  get '/search_book' => 'searches#search_book'
 end

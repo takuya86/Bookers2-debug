@@ -11,9 +11,16 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.left_joins(:favorites)
-               .group(:id)
-               .order('COUNT(favorites.id) DESC')
+    case params[:order]
+    when 'created_at_desc'
+      @books = Book.order(created_at: :desc)
+    when 'star_desc'
+      @books = Book.order(star: :desc)
+    else
+      @books = Book.left_joins(:favorites)
+                   .group(:id)
+                   .order('COUNT(favorites.id) DESC')
+    end
     @newbook = Book.new
   end
 
@@ -56,6 +63,6 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body)
+    params.require(:book).permit(:title, :body, :tag, :star)
   end
 end

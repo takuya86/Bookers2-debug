@@ -4,6 +4,7 @@
       <th></th>
       <th>Title</th>
       <th>Opinion</th>
+      <th>Tag</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,10 +17,14 @@
         </td>
         <td><%= link_to book.title,book %></td>
         <td><%= book.body %></td>
+        <td>
+          <%= link_to book.tag, search_book_path(keyword: book.tag) %>
+        </td>
         <td id="favorite_btn_<%= book.id %>" class="favorite-btn"><%= render 'favorites/favorite', book: book %></td>
         <td>
           <p><%= "コメント数：#{book.book_comments.count}" %></p>
         </td>
+        <td><%= render "books/star_rate", book: book %></td>
       </tr>
     <% end %>
   </tbody>
